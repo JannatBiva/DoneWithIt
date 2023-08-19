@@ -1,125 +1,40 @@
-import React, { useState } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  TextInput,
-  FlatList,
-} from 'react-native';
+import React from 'react';
+import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import MapView, { Marker } from 'react-native-maps'; // Import MapView and Marker
 
-const categoriesData = [
-  { id: '0', title: 'All' },
-  { id: '1', title: 'Dress' },
-  { id: '2', title: 'Accessories' },
-  { id: '3', title: 'Shoes' },
-  // Add more categories as needed
+
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+
+const images = [
+  require('./assets/image-one.jpg'),
+  require('./assets/image1.jpg'),
+  require('./assets/image2.jpg'),
+  require('./assets/image3.jpg'),
+  require('./assets/image4.jpg'),
+  require('./assets/image5.jpg'),
+  // Add more image paths as needed
 ];
+const ItemDetails = () => {
+  const [activeSlide, setActiveSlide] = React.useState(0);
 
-const itemsData = [
-  // Sample data for items in the selected category
-  {
-    id: '1',
-    title: 'Blue Sneakers',
-    seller: 'Jane Doe',
-    place: 'New York',
-    price: '$50',
-    category: '3', // Assign category ID to items
-    image: require('./assets/blue-sneakers.jpg'), // Require local image
-  },
-  {
-    id: '2',
-    title: 'Red Dress',
-    seller: 'John Smith',
-    place: 'Los Angeles',
-    price: '$80',
-    category: '1', // Assign category ID to items
-    image: require('./assets/red-dress.jpg'),
-  },
-  {
-    id: '3',
-    title: 'Earings',
-    seller: 'Alis',
-    place: 'Los Angeles',
-    price: '$10',
-    category: '2', // Assign category ID to items
-    image: require('./assets/earings.jpg'),
-  },
-  // Add more items as needed
-];
-
-const featuredProductsData = [
-  // Sample data for featured products
-  {
-    id: '1',
-    title: 'Cool Sunglasses',
-    price: '$25',
-    image: require('./assets/Ray-Ban_sunglasses.jpg'), // Require local image
-  },
-  {
-    id: '2',
-    title: 'Stylish Watch',
-    price: '$120',
-    image: require('./assets/watch.jpg'), // Require local image
-  },
-  // Add more featured products as needed
-];
-
-const MainPage = () => {
-  const username = 'JohnDoe'; // Replace with the actual username
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('0'); // Default to 'All'
-
-  const renderCategoryItem = ({ item }) => (
-    <TouchableOpacity
-      style={[
-        styles.categoryItem,
-        selectedCategory === item.id && styles.selectedCategoryItem,
-      ]}
-      onPress={() => setSelectedCategory(item.id)}
-    >
-      <Text style={styles.categoryText}>{item.title}</Text>
-    </TouchableOpacity>
-  );
-
-  const renderSelectedItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Image source={item.image} style={styles.itemImage} />
-      <View style={styles.itemDetails}>
-        <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemSubtitle}>Seller: {item.seller}</Text>
-        <Text style={styles.itemSubtitle}>Place: {item.place}</Text>
-        <Text style={styles.itemPrice}>Price: {item.price}</Text>
-      </View>
+  const renderImageItem = ({ item }) => (
+    <View style={styles.imageContainer}>
+      <Image source={item} style={styles.image} />
     </View>
   );
-
-  const renderFeaturedProduct = ({ item }) => (
-    <View style={styles.featuredItem}>
-      <Image source={item.image} style={styles.featuredItemImage} />
-      <Text style={styles.featuredItemTitle}>{item.title}</Text>
-      <Text style={styles.featuredItemPrice}>{item.price}</Text>
-    </View>
-  );
-
-  const filteredItems =
-    selectedCategory === '0'
-      ? itemsData
-      : itemsData.filter((item) => item.category === selectedCategory);
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.sidebarIcon}>
+        <View style={styles.header}>
+            <TouchableOpacity style={styles.sidebarIcon}>
           {/* Custom sidebar icon image */}
           <Image
             source={require('./assets/sidebar.png')}
             style={styles.iconImage}
           />
-        </TouchableOpacity>
-
+                  </TouchableOpacity>
         <View style={styles.middleText}>
           {/* DoneWithIt text */}
           <Text style={styles.doneWithItText}>DoneWithIt</Text>
@@ -130,45 +45,63 @@ const MainPage = () => {
             style={styles.profileImage}
           />
         </TouchableOpacity>
-      </View>
-      <ScrollView style={styles.scrollContent}>
-        <View style={styles.userInfo}>
-          <Text style={styles.greetingText}>Hi, {username}</Text>
-          <Text style={styles.searchPrompt}>
-            What do you want to buy today?
-          </Text>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search for products"
-            value={searchQuery}
-            onChangeText={(text) => setSearchQuery(text)}
-          />
         </View>
-        <View style={styles.categories}>
-          <FlatList
-            data={categoriesData}
-            renderItem={renderCategoryItem}
-            keyExtractor={(item) => item.id}
-            horizontal
-          />
-        </View>
-        <View style={styles.itemsGrid}>
-          <FlatList
-            data={filteredItems}
-            renderItem={renderSelectedItem}
-            keyExtractor={(item) => item.id}
-            numColumns={2} // Display items in 2 columns
-          />
-        </View>
-        <View style={styles.featuredProductsContainer}>
-          <Text style={styles.featuredText}>Featured Products</Text>
-          <View style={styles.featuredProductsList}>
-          <FlatList
-            data={featuredProductsData}
-            renderItem={renderFeaturedProduct}
-            keyExtractor={(item) => item.id}
-            horizontal
-          />
+        <TouchableOpacity style={styles.backButton}>
+          <Image source={require('./assets/back-button.png')} style={styles.backButtonImage} />
+          <Text style={styles.backButtonText}>Go Back</Text>
+        </TouchableOpacity>
+        <ScrollView>
+          <View>
+          <Carousel
+        data={images}
+        renderItem={renderImageItem}
+        sliderWidth={windowWidth}
+        itemWidth={windowWidth}
+        onSnapToItem={(index) => setActiveSlide(index)}
+      />
+      <Pagination
+        dotsLength={images.length}
+        activeDotIndex={activeSlide}
+        containerStyle={styles.pagination}
+        dotStyle={styles.paginationDot}
+        inactiveDotStyle={styles.paginationInactiveDot}
+        inactiveDotOpacity={0.6}
+        inactiveDotScale={0.8}
+      />
+          </View>
+        
+            
+      <View style={styles.itemDetails}>
+        <Text style={styles.itemName}>Red Dress</Text>
+        <Text style={styles.itemPrice}>$50</Text>
+        <Text style={styles.itemSubtitle}>Seller: Jane Doe</Text>
+        <Text style={styles.itemSubtitle}>Place: New York</Text>
+        <Text style={styles.itemSubtitle}>Used for: 6 months</Text>
+        <Text style={styles.itemDescription}>
+    This elegant red dress is perfect for any special occasion. It has been lovingly worn for only 6 months and is in excellent condition. The dress features a flattering silhouette, a comfortable fit, and a timeless design that will make you stand out at parties, weddings, or romantic dinners.
+  </Text>
+        <TouchableOpacity style={styles.contactButton}>
+          <Text style={styles.contactButtonText}>Contact Seller</Text>
+        </TouchableOpacity>
+        <View style={styles.mapContainer}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: 37.78825, // Replace with your desired latitude
+              longitude: -122.4324, // Replace with your desired longitude
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+          >
+            <Marker
+              coordinate={{
+                latitude: 37.78825, // Replace with the same latitude as above
+                longitude: -122.4324, // Replace with the same longitude as above
+              }}
+              title="Item Location"
+              description="Location of the item"
+            />
+          </MapView>
         </View>
         </View>
       </ScrollView>
@@ -180,6 +113,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 30,
   },
   header: {
     flexDirection: 'row',
@@ -215,133 +156,91 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
   },
-  userInfo: {
-    paddingHorizontal: 20,
-    marginTop: 10,
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 22,
   },
-  greetingText: {
-    fontSize: 18,
+  backButtonImage: {
+    width: 20,
+    height: 20,
+    marginRight: 5,
+    marginLeft: 22,    
+  },
+  backButtonText: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
-  searchPrompt: {
-    marginTop: 10,
-    fontSize: 20,
+   imageContainer: {
+    width: windowWidth,
+    height: windowHeight * 0.4, // Adjust as needed
   },
-  searchInput: {
-    marginTop: 5,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  pagination: {
+    position: 'absolute',
+    bottom: 10,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paginationDot: {
+    width: 10,
+    height: 10,
     borderRadius: 5,
+    backgroundColor: 'white', // Active dot color
   },
-  categories: {
+  paginationInactiveDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: 'gray', // Inactive dot color
+  },
+  itemDetails: {
+    paddingHorizontal: 20,
     marginTop: 20,
-    marginBottom: 20,
-    paddingLeft: 22,
-
   },
-  categoryItem: {
-    backgroundColor: 'gray',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    marginRight: 10,
+  itemName: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  selectedCategoryItem: {
-    backgroundColor: 'blue', // Change the color for selected category
+  itemPrice: {
+    fontSize: 24,
+    color: 'green',
   },
-  categoryText: {
+  itemSubtitle: {
+    fontSize: 16,
+    marginTop: 5,
+  },
+  itemDescription: {
+    fontSize: 16,
+    marginTop: 10,
+  },
+  contactButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  contactButtonText: {
     color: 'white',
     fontWeight: 'bold',
   },
-  selectedCategory: {
+  mapContainer: {
+    height: 300, // Adjust the height as needed
     marginTop: 20,
-  },
-  itemContainer: {
-    width: '48%', // Adjust the width as needed
-    borderRadius: 10,
+    marginBottom: 50,
     borderWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: 'white',
-    padding: 10,
-    marginBottom: 10,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  itemImage: {
-    width: '100%',
-    height: 150, // Adjust the height as needed
-    resizeMode: 'contain',
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  itemDetails: {
+  map: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  itemTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  itemSubtitle: {
-    fontSize: 14,
-    marginBottom: 2,
-  },
-  itemPrice: {
-    fontSize: 14,
-    color: 'green',
-  },
-  itemsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-  },
-  featuredProductsContainer: {
-    marginTop: 20,
-    paddingHorizontal: 10,
-  },
-  featuredProductsList: {
-    marginTop: 10, // Adjust as needed to control gap
-  },
-  featuredText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    alignItems: 'center',
-  },
-  featuredItem: {
-    width: 150, // Adjust the width as needed
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: 'white',
-    padding: 5,
-    marginBottom: 10,
-    marginRight: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-   
-  },
-  featuredItemImage: {
-    width: '100%',
-    height: 150,
-    resizeMode: 'contain',
-    borderRadius: 10,
-    marginBottom: 5,
-  },
-  featuredItemTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  featuredItemPrice: {
-    fontSize: 14,
-    color: 'green',
-  },
-      // ... Other styles for your main page content
-    });
-export default MainPage;
+  // ... Other styles for your item details page content
+});
+
+export default ItemDetails;
