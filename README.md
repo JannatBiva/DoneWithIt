@@ -39,12 +39,22 @@ Let's get started with DoneWithIt!
 ### Installation
 
 To use DoneWithIt, follow these steps:
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/donewithit.git
 
+# Change to the project directory
+cd donewithit
 
+# Install dependencies
+npm install
+```
 
 ## Usage
 To run DoneWithIt, use the following command:
-
+```bash
+npm start
+```
 
 
 ## Contributing
