@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  TextInput,
-  FlatList,
-} from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, Image, StyleSheet, TextInput, FlatList,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const navigation = useNavigation();
 
 const categoriesData = [
   { id: '0', title: 'All' },
@@ -30,7 +20,7 @@ const itemsData = [
     place: 'New York',
     price: '$50',
     category: '3', // Assign category ID to items
-    image: require('./assets/blue-sneakers.jpg'), // Require local image
+    image: require('../assets/blue_sneakers.jpg'), // Require local image
   },
   {
     id: '2',
@@ -39,7 +29,7 @@ const itemsData = [
     place: 'Los Angeles',
     price: '$80',
     category: '1', // Assign category ID to items
-    image: require('./assets/red-dress.jpg'),
+    image: require('../assets/red-dress.jpg'),
   },
   {
     id: '3',
@@ -48,7 +38,7 @@ const itemsData = [
     place: 'Los Angeles',
     price: '$10',
     category: '2', // Assign category ID to items
-    image: require('./assets/earings.jpg'),
+    image: require('../assets/earings.jpg'),
   },
   // Add more items as needed
 ];
@@ -59,13 +49,13 @@ const featuredProductsData = [
     id: '1',
     title: 'Cool Sunglasses',
     price: '$25',
-    image: require('./assets/Ray-Ban_sunglasses.jpg'), // Require local image
+    image: require('../assets/Ray-Ban_sunglasses.jpg'), // Require local image
   },
   {
     id: '2',
     title: 'Stylish Watch',
     price: '$120',
-    image: require('./assets/watch.jpg'), // Require local image
+    image: require('../assets/watch.jpg'), // Require local image
   },
   // Add more featured products as needed
 ];
@@ -74,6 +64,7 @@ const MainPage = () => {
   const username = 'JohnDoe'; // Replace with the actual username
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('0'); // Default to 'All'
+  const navigation = useNavigation()
 
   const renderCategoryItem = ({ item }) => (
     <TouchableOpacity
@@ -88,16 +79,24 @@ const MainPage = () => {
   );
 
   const renderSelectedItem = ({ item }) => (
-    <View style={styles.itemContainer}>
-      <Image source={item.image} style={styles.itemImage} />
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => 
+        {navigation.navigate('Details', { selectedItem: item });
+    }}
+  >
+      <View>
       <View style={styles.itemDetails}>
-        <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemSubtitle}>Seller: {item.seller}</Text>
-        <Text style={styles.itemSubtitle}>Place: {item.place}</Text>
-        <Text style={styles.itemPrice}>Price: {item.price}</Text>
+        <Image source={item.image} style={styles.itemImage} />
+          <Text style={styles.itemTitle}>{item.title}</Text>
+          <Text style={styles.itemSubtitle}>Seller: {item.seller}</Text>
+          <Text style={styles.itemSubtitle}>Place: {item.place}</Text>
+          <Text style={styles.itemPrice}>Price: {item.price}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
+  
 
   const renderFeaturedProduct = ({ item }) => (
     <View style={styles.featuredItem}>
@@ -118,7 +117,7 @@ const MainPage = () => {
         <TouchableOpacity style={styles.sidebarIcon}>
           {/* Custom sidebar icon image */}
           <Image
-            source={require('./assets/sidebar.png')}
+            source={require('../assets/sidebar.png')}
             style={styles.iconImage}
           />
         </TouchableOpacity>
@@ -129,7 +128,7 @@ const MainPage = () => {
         </View>
         <TouchableOpacity style={styles.profileIcon}>
           <Image
-            source={require('./assets/profile-image.jpg')} // Replace with the path to your profile picture
+            source={require('../assets/profile-image.jpg')} // Replace with the path to your profile picture
             style={styles.profileImage}
           />
         </TouchableOpacity>
@@ -262,11 +261,11 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     width: '48%', // Adjust the width as needed
+    height: 300,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: 'white',
-    padding: 10,
     marginBottom: 10,
     marginRight: 10,
     justifyContent: 'center',
@@ -274,7 +273,7 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     width: '100%',
-    height: 150, // Adjust the height as needed
+    height: 200, // Adjust the height as needed
     resizeMode: 'contain',
     borderRadius: 10,
     marginBottom: 10,
@@ -345,6 +344,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'green',
   },
-      // ... Other styles for your main page content
+      // ... Other styles for main page content
     });
 export default MainPage;

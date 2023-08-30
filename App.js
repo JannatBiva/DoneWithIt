@@ -1,246 +1,27 @@
-import React from 'react';
-import { ScrollView, View, Text, Image, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import MapView, { Marker } from 'react-native-maps'; // Import MapView and Marker
+import React, { useState, useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import NavigationStack from './routes/Navigation'; // Import your navigation stack
+import { AppRegistry } from 'react-native'; // Import AppRegistry
+import { name as appName } from './app.json';
 
+AppRegistry.registerComponent(appName, () => App);
 
+export default function App() {
+  const [isLoading, setIsLoading] = useState(false);
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
-
-const images = [
-  require('./assets/image-one.jpg'),
-  require('./assets/image1.jpg'),
-  require('./assets/image2.jpg'),
-  require('./assets/image3.jpg'),
-  require('./assets/image4.jpg'),
-  require('./assets/image5.jpg'),
-  // Add more image paths as needed
-];
-const ItemDetails = () => {
-  const [activeSlide, setActiveSlide] = React.useState(0);
-
-  const renderImageItem = ({ item }) => (
-    <View style={styles.imageContainer}>
-      <Image source={item} style={styles.image} />
-    </View>
-  );
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   return (
-    <View style={styles.container}>
-        <View style={styles.header}>
-            <TouchableOpacity style={styles.sidebarIcon}>
-          {/* Custom sidebar icon image */}
-          <Image
-            source={require('./assets/sidebar.png')}
-            style={styles.iconImage}
-          />
-                  </TouchableOpacity>
-        <View style={styles.middleText}>
-          {/* DoneWithIt text */}
-          <Text style={styles.doneWithItText}>DoneWithIt</Text>
-        </View>
-        <TouchableOpacity style={styles.profileIcon}>
-          <Image
-            source={require('./assets/profile-image.jpg')} // Replace with the path to your profile picture
-            style={styles.profileImage}
-          />
-        </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.backButton}>
-          <Image source={require('./assets/back-button.png')} style={styles.backButtonImage} />
-          <Text style={styles.backButtonText}>Go Back</Text>
-        </TouchableOpacity>
-        <ScrollView>
-          <View>
-          <Carousel
-        data={images}
-        renderItem={renderImageItem}
-        sliderWidth={windowWidth}
-        itemWidth={windowWidth}
-        onSnapToItem={(index) => setActiveSlide(index)}
-      />
-      <Pagination
-        dotsLength={images.length}
-        activeDotIndex={activeSlide}
-        containerStyle={styles.pagination}
-        dotStyle={styles.paginationDot}
-        inactiveDotStyle={styles.paginationInactiveDot}
-        inactiveDotOpacity={0.6}
-        inactiveDotScale={0.8}
-      />
-          </View>
-        
-            
-      <View style={styles.itemDetails}>
-        <Text style={styles.itemName}>Red Dress</Text>
-        <Text style={styles.itemPrice}>$50</Text>
-        <Text style={styles.itemSubtitle}>Seller: Jane Doe</Text>
-        <Text style={styles.itemSubtitle}>Place: New York</Text>
-        <Text style={styles.itemSubtitle}>Used for: 6 months</Text>
-        <Text style={styles.itemDescription}>
-    This elegant red dress is perfect for any special occasion. It has been lovingly worn for only 6 months and is in excellent condition. The dress features a flattering silhouette, a comfortable fit, and a timeless design that will make you stand out at parties, weddings, or romantic dinners.
-  </Text>
-        <TouchableOpacity style={styles.contactButton}>
-          <Text style={styles.contactButtonText}>Contact Seller</Text>
-        </TouchableOpacity>
-        <View style={styles.mapContainer}>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 37.78825, // Replace with your desired latitude
-              longitude: -122.4324, // Replace with your desired longitude
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            <Marker
-              coordinate={{
-                latitude: 37.78825, // Replace with the same latitude as above
-                longitude: -122.4324, // Replace with the same longitude as above
-              }}
-              title="Item Location"
-              description="Location of the item"
-            />
-          </MapView>
-        </View>
-        </View>
-      </ScrollView>
-    </View>
+    <NavigationContainer>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <NavigationStack />
+      )}
+    </NavigationContainer>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 30,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingTop: 60,
-    paddingBottom: 30,
-  },
-  sidebarIcon: {
-    flex: 1,
-    alignItems: 'flex-start',
-  },
-  iconImage: {
-    width: 40,
-    height: 40,
-      },
-  middleText: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  doneWithItText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  profileIcon: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  profileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 22,
-  },
-  backButtonImage: {
-    width: 20,
-    height: 20,
-    marginRight: 5,
-    marginLeft: 22,    
-  },
-  backButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-   imageContainer: {
-    width: windowWidth,
-    height: windowHeight * 0.4, // Adjust as needed
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-  },
-  pagination: {
-    position: 'absolute',
-    bottom: 10,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  paginationDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: 'white', // Active dot color
-  },
-  paginationInactiveDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'gray', // Inactive dot color
-  },
-  itemDetails: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  itemName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  itemPrice: {
-    fontSize: 24,
-    color: 'green',
-  },
-  itemSubtitle: {
-    fontSize: 16,
-    marginTop: 5,
-  },
-  itemDescription: {
-    fontSize: 16,
-    marginTop: 10,
-  },
-  contactButton: {
-    backgroundColor: 'blue',
-    paddingVertical: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  contactButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  mapContainer: {
-    height: 300, // Adjust the height as needed
-    marginTop: 20,
-    marginBottom: 50,
-    borderWidth: 1,
-    borderColor: '#ccc',
-  },
-  map: {
-    flex: 1,
-  },
-  // ... Other styles for your item details page content
-});
-
-export default ItemDetails;
+}
