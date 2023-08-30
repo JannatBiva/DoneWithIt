@@ -58,14 +58,14 @@ npm start
 
 
 ## Contributing
-We welcome contributions from the community to make DoneWithIt even better. If you'd like to contribute, please follow our Contribution Guidelines.
+I welcome contributions from the community to make DoneWithIt even better. If you'd like to contribute, please follow our Contribution Guidelines.
 
 If you encounter any issues or have ideas for improvement, please open an issue on our GitHub repository.
 
 
 Acknowledgments
-We'd like to acknowledge and thank the developers of the following open-source libraries used in this project:
+I'd like to acknowledge and thank the developers of the following open-source libraries used in this project:
 
-React Native
-React Navigation
+- [React Native](https://reactnative.dev/)
+- [React Navigation](https://reactnavigation.org/)
 
