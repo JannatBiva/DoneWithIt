@@ -74,7 +74,6 @@ I'd like to acknowledge and thank the developers of the following open-source li
 Here are some screenshots of the DoneWithIt app:
 
 <img src="/assets/IMG_5137.jpg" alt="Screenshot 1" width="400" height="800">
-<img src="/assets/IMG_5139.jpg" alt="Screenshot 1" width="400" height="800">
 <img src="/assets/IMG_5140.jpg" alt="Screenshot 1" width="400" height="800">
 <img src="/assets/IMG_5141.jpg" alt="Screenshot 1" width="400" height="800">
 <img src="/assets/IMG_5142.jpg" alt="Screenshot 1" width="400" height="800">
