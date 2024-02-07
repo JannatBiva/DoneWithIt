@@ -74,13 +74,13 @@ I'd like to acknowledge and thank the developers of the following open-source li
 Here are some screenshots of the DoneWithIt app:
 <div style="display: flex; flex-direction: row;">
     
-<img src="/assets/IMG_5137.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5140.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5141.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5142.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5143.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5144.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5145.jpg" alt="Screenshot 1" width="200" height="400">
-<img src="/assets/IMG_5146.jpg" alt="Screenshot 1" width="200" height="400">
+<img src="/assets/IMG_5137.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5140.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5141.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5142.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5143.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5144.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5145.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
+<img src="/assets/IMG_5146.jpg" alt="Screenshot 1" width="200" height="400" style="margin-right: 20px;">
 
 </div>
